@@ -12,6 +12,7 @@ RUN pip install \
     pytest-cov \
     requests \
     uvicorn
-RUN Rscript -e "install.packages(c('janitor'), repos='http://cran.rstudio.com')"
+RUN Rscript -e "install.packages(c('janitor', 'png'), repos='http://cran.rstudio.com')"
+
 WORKDIR /workdir
 COPY . .
