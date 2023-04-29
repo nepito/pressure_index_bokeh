@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>nies</title>
+        <link rel="icon" href = "https://raw.githubusercontent.com/nepito/bukeh_example/feature/template/data/nies.png" type="image/icon type">
+        <script src="https://cdn.bokeh.org/bokeh/release/bokeh-2.4.2.min.js"></script>
+        <script src="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.4.2.min.js"></script>
+        <script src="https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.4.2.min.js"></script>
+        <script src="https://cdn.bokeh.org/bokeh/release/bokeh-gl-2.4.2.min.js"></script>
+        <script src="https://cdn.bokeh.org/bokeh/release/bokeh-mathjax-2.4.2.min.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            <p class="lead">
+                Como les platiqué en <a href =
+                "https://niesoccer.blogspot.com/2023/03/inclinando-la-balanza.html"
+                target="_blank">Inclinando la Balanza</a>: la inclinación nos habla de la posesión
+                del balón que un equipo tiene en una zona en la que puede hacer daño, el último
+                tercio de la cancha. La definición de la inclinación es el porcentaje de los pases
+                totales en el último tercio de la cancha que hizo un equipo. Por ejemplo, supongamos
+                que en un partido hubo en total 10 pases en el último tercio de la cancha. Digamos
+                que el equipo local hizo 7 pases y el equipo visitante hizo 3. Entonces la
+                inclinación del equipo local sería del 70% y del equipo visitante del 30%. Pues
+                bien, como les había prometido, hoy hablaremos de la inclinación de los equipos de
+                la Premier League.
+            </p>
+            <table style="border:1px solid black;margin-left:auto;margin-right:auto;">
+                <tr>
+                    <th>PL</th>
+                    <th></th>
+                    <th>Equipo</th>
+                    <th>Inclinación</th>
+                </tr>
+                {% for item in items %}
+                <TR>
+                   <TD align="left">{{item.premier}}</TD>
+                   <TD align="right"><img src="https://media.api-sports.io/football/teams/{{item.team_id }}.png" width="20"></TD>
+                   <TD class="c1">{{item.team}}</TD>
+                   <td align ="center">{{item.tilt}}</td>
+                </TR>
+                {% endfor %}
+            </table>
+        </div>
+        <div class="container">
+            <p class="lead">
+            Hoy veremos el valor de los índices de presión para la liga inglesa.
+            Como vimos en los <a href="https://niesoccer.blogspot.com/2023/04/indices-de-presion-ppda-y-build-up.html">Índices de presión: PPDA y Build-Up Disruption
+            </a> el <strong>PPDA</strong> mide la cantidad de pases que permite el equipo defensor
+            antes de que lleve a cabo una acción defensiva. También vimos que la
+            <strong>BDP</strong> mide el efecto destructivo de la presión en la tasa de
+            pases completos del equipo rival.
+            </p>
+            <p>En la figura de abajo presentamos la relación que existe entre los dos índices. En el
+            eje horizontal tenemos la <strong>BDP</strong> y en el eje <em>y</em> el
+            <strong>PPDA</strong>. Los puntos representan el desempeño de cada uno de los equipos de
+            la Premier League.</p>
+        </div>
+        <div class="container">
+        <figure class="figure">
+		{{ script|safe }} {{ div|safe }}
+    <figcaption class="figure-caption text-end"><strong>Figura 1.</strong> Pases permitidos por
+    acción defensiva (PPDA) contra interrupción en la fase de construcción (BDP). Los puntos de color azul
+    son aquellos que están en posiciones europeas. Los puntos en rojo son los equipos que están en
+    la zona de descenso. El resto de los equipos están en color naranja. La línea negra corresponde a
+    la línea de tendecia de las dos variables.</figcaption>
+    </figure>
+	    </div>
+        <div>
+            <p>Podemos ver que el equipo con mejor <strong>BDP</strong>, el punto hasta la derecha,
+        es el Liverpool. El punto más a la izquierda corresponde el Tottenham y es este equipo el que tiene más
+        margen de mejora en la <strong>BDP</strong>. Que el valor sea negativo nos indica que los
+        equipos mejoran la precisión en los pases cuando juegan contra el Tottenham.</p>
+    <p>Chelsea es el equipo que permite menos pases a sus rivales, es decir tiene el menor <strong>PPDA</strong> de
+    la liga. Bournemouth es el equipo que permite más pases antes de poder recuperar el balón. Es
+    este equipo el que está en la parte superio de la figura.</p>
+<p>Los puntos en rojo representan los equipos que están en la zona de descenso. Al pasar el cursor por
+esos puntos vemos que esos equipos son West Ham, Bournemouth y Southampton, en los lugares 18, 19 y
+20, respectivamente. Los equipos en la zona de competiciones europeas corresponden a los puntos de
+color azul. Esos equipos son Newcastle, Tottenham, Mancheste United, Manchester City y Arsenal. El
+resto de los equipos están en color naranja.</p>
+<p>La línea negra muestra la relación entre los índices. La pendiente negativa
+nos indica que a mayor <strong>BDP</strong> menor es el número de pases que los equipos le permiten a sus
+rivales. Esta relación es la esperada. Cuando un equipo presiona a su rival, recupera antes el balón
+porque su rival disminuye la precisión de sus pases.</p>
+<p>Por último, notamos que el Tottenham ha alcanzado posiciones europeas sin necesidad de ser un
+equipo que presione a sus rivales. ¿Cómo podremos complementar estos índices para hablar del estilo
+de juego de un equipo? ¿El estilo <em>Heavy metal</em> de Klopp será lo que tiene al Liverpool en el
+ángulo inferior derecho de la figura de arriba? La presión de Southampton es similar a la de los
+equipos en zona de competiciones europeas. Sin embargo, están en el último lugar de la liga. ¿Será que su estilo de juego no fue el adecuado?</p></div>
+    </body>
+</html>
