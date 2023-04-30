@@ -77,12 +77,16 @@ p.yaxis.axis_label = "PPDA"
 p.line(x, y_predicted, color="black")
 hover = HoverTool(renderers=[r1], tooltips=TOOLTIPS)
 p.add_tools(hover)
+
 script, div = components(p)
+items = bdp_and_ppda.to_dict("records")
+
 fileLoader = FileSystemLoader("reports")
 env = Environment(loader=fileLoader)
 
-rendered = env.get_template("bdp_vs_ppda.html").render(
+rendered = env.get_template("tilt_and_bdp_vs_ppda.html").render(
     script=script,
     div=div,
+    items = items,
 )
 print(rendered)
