@@ -72,11 +72,6 @@ width = 1
 height = 1.0
 image3 = ImageURL(url=dict(value=url), x=-2, y=8, h=height, w=width, anchor="bottom_left")
 p.add_glyph(source, image3)
-for _, row in bdp_and_ppda.iterrows():
-    url = f"https://media.api-sports.io/football/teams/{row['team_id']}.png"
-    image3 = ImageURL(url=dict(value=url), y=row['ppda'], x=row['build_up_disruption'], anchor="center")
-    p.add_glyph(source, image3)
-
 p.xaxis.axis_label = "Build-up disruption"
 p.yaxis.axis_label = "PPDA"
 p.line(x, y_predicted, color="black")
