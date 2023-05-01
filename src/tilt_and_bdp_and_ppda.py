@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 from bokeh.embed import components
 from bokeh.plotting import figure
-from bokeh.models import ColumnDataSource, ImageURL, HoverTool
+from bokeh.models import ColumnDataSource, ImageURL, HoverTool, Span
 import json
 
 # JSON file
@@ -102,13 +102,73 @@ p.add_tools(hover)
 
 script, div = components(p)
 items = bdp_and_ppda.to_dict("records")
+#%%%             Esta es la sección
+arsenal = pd.read_csv("/workdir/data/napoli_serie_a.csv")
+arsenal["Date"] = pd.to_datetime(arsenal["Date"])
+source = ColumnDataSource(data=arsenal)
 
+leader_team = "Napoli"
+TOOLTIPS = [
+    ("Partido", "@{Match}"),
+    (f"Inclinación {leader_team}", "@{tilt}"),
+    ("Inclinación Rival", "@{rivales}"),
+]
+
+p = figure(
+    title=f"Inclinación del {leader_team} en el año 2022-2023",
+    toolbar_location=None,
+    tools="hover",
+    tooltips=TOOLTIPS,
+    x_axis_type="datetime",
+    sizing_mode="scale_both",
+    aspect_ratio=2,
+    x_range=(
+        arsenal["Date"].iloc[-1] - pd.DateOffset(days=10),
+        arsenal["Date"].iloc[0] + pd.DateOffset(days=10),
+    ),
+)
+
+tilt_mean = bdp_and_ppda["tilt"].mean()
+tilt_std = bdp_and_ppda["tilt"].std()
+p.circle(x="Date", y="tilt", size=8, source=source)
+hline_sup = Span(
+    location=tilt_mean + tilt_std,
+    dimension="width",
+    line_color="green",
+    line_width=2,
+    line_dash="dashed",
+)
+hline_inf = Span(
+    location=tilt_mean - tilt_std,
+    dimension="width",
+    line_color="red",
+    line_width=2,
+    line_dash="dashed",
+)
+width = arsenal["Date"].iloc[0] - arsenal["Date"].iloc[9]
+height = 10
+image3 = ImageURL(
+    url=dict(value=url),
+    x=arsenal["Date"].iloc[-1],
+    y=24,
+    h=height,
+    w=width,
+    anchor="bottom_left",
+)
+p.add_glyph(source, image3)
+p.xaxis.axis_label = ""
+p.yaxis.axis_label = "Inclinación del juego (%)"
+p.renderers.extend([hline_sup, hline_inf])
+script_tilt, div_tilt = components(p)
+# %%%
 fileLoader = FileSystemLoader("reports")
 env = Environment(loader=fileLoader)
 
 rendered = env.get_template("tilt_and_bdp_vs_ppda.html").render(
     script=script,
     div=div,
+    script_t=script_tilt,
+    div_t=div_tilt,
     items=items,
     summary=summary_tilt_bdp_ppda,
     league=name_league[league],
