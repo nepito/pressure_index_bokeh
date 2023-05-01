@@ -41,7 +41,7 @@ assing_color = {
     "135": assing_color_serie_a,
 }
 
-bdp_and_ppda = pd.read_csv(f"/workdir/data/pression_index_{league}_2022.csv")
+bdp_and_ppda = pd.read_csv(f"/workdir/data/pression_index_{league}_2022.csv").sort_values(by=['tilt'], ascending=False)
 bdp_and_ppda["color"] = bdp_and_ppda["league"].map(assing_color[league])
 source = ColumnDataSource(data=bdp_and_ppda)
 
