@@ -9,6 +9,7 @@
         <script src="https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.4.2.min.js"></script>
         <script src="https://cdn.bokeh.org/bokeh/release/bokeh-gl-2.4.2.min.js"></script>
         <script src="https://cdn.bokeh.org/bokeh/release/bokeh-mathjax-2.4.2.min.js"></script>
+        <script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
     </head>
     <body>
         <div class="container">
@@ -25,7 +26,21 @@
                 bien, como les había prometido, hoy hablaremos de la inclinación de los equipos de
                 la {{league}}.
             </p>
-            <table style="border:1px solid black;margin-left:auto;margin-right:auto;">
+            <p>
+                En este artículo, hablaremos de la inclinación de los equipos de la {{league}}. Para
+                ello, presentaremos una tabla con los equipos de la {{league}}, su posición en la
+                tabla y su inclinación promedio durante el último año. También incluiremos una
+                gráfica para mostrar la inclinación del equipo líder en cada uno de sus partidos.
+            </p>
+            <p>
+
+La tabla muestra a los equipo la {{league}} ordenados por su inclinación promedio. Vemos que en la
+{{league}} es el equipo {{summary["max_tilt"]}} quien tiene la inclinación más alta, con un
+promedio del {{summary["max_tilt_value"]}}%, seguido por el Toluca, con un promedio del 55%. El
+equipo con menos inclinación es el equipo {{summary["min_tilt"]}}, con apenas un
+{{summary["min_tilt_value"]}}%.
+            </p>
+            <table style="border:1px solid black;margin-left:auto;margin-right:auto;" class="sortable">
                 <tr>
                     <th>Posición</th>
                     <th></th>
@@ -33,7 +48,7 @@
                     <th>Inclinación</th>
                 </tr>
                 {% for item in items %}
-                <TR>
+                <TR class="item">
                    <TD align="center">{{item.league}}</TD>
                    <TD align="right"><img src="https://media.api-sports.io/football/teams/{{item.team_id }}.png" width="20"></TD>
                    <TD class="c1">{{item.team}}</TD>

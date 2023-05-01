@@ -6,6 +6,8 @@ tilt_bdp_ppda <- read_csv(path)
 max_min_tilt_bdp_ppda <- list(
   "max_tilt" = tilt_bdp_ppda$team[tilt_bdp_ppda$tilt == max(tilt_bdp_ppda$tilt)],
   "min_tilt" = tilt_bdp_ppda$team[tilt_bdp_ppda$tilt == min(tilt_bdp_ppda$tilt)],
+  "max_tilt_value" = round(tilt_bdp_ppda$tilt[tilt_bdp_ppda$tilt == max(tilt_bdp_ppda$tilt)], 1),
+  "min_tilt_value" = round(tilt_bdp_ppda$tilt[tilt_bdp_ppda$tilt == min(tilt_bdp_ppda$tilt)], 1),
   "max_ppda" = tilt_bdp_ppda$team[tilt_bdp_ppda$ppda == max(tilt_bdp_ppda$ppda)],
   "min_ppda" = tilt_bdp_ppda$team[tilt_bdp_ppda$ppda == min(tilt_bdp_ppda$ppda)],
   "max_bdp" = tilt_bdp_ppda$team[tilt_bdp_ppda$build_up_disruption == max(tilt_bdp_ppda$build_up_disruption)],

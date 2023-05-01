@@ -24,6 +24,14 @@ def assing_color_serie_a(x):
     return "orange"
 
 
+def assing_future_serie_a(x):
+    if x < 7:
+        return "Zona europea"
+    if x > 17:
+        return "Descenso"
+    return "Sin novedad"
+
+
 def assing_color_premier(x):
     if x < 6:
         return "blue"
@@ -51,6 +59,7 @@ bdp_and_ppda = pd.read_csv(f"/workdir/data/pression_index_{league}_2022.csv").so
     by=["tilt"], ascending=False
 )
 bdp_and_ppda["color"] = bdp_and_ppda["league"].map(assing_color[league])
+bdp_and_ppda["futuro"] = bdp_and_ppda["league"].map(assing_future_serie_a)
 source = ColumnDataSource(data=bdp_and_ppda)
 
 TOOLTIPS = [
@@ -78,7 +87,9 @@ slope = par[0][0]
 intercept = par[0][1]
 y_predicted = [slope * i + intercept for i in x]
 
-r1 = p.circle(x="build_up_disruption", y="ppda", size=8, source=source, color="color")
+r1 = p.circle(
+    x="build_up_disruption", y="ppda", size=8, source=source, color="color", legend="futuro",
+)
 width = 1
 height = 1.0
 image3 = ImageURL(url=dict(value=url), x=-2, y=8, h=height, w=width, anchor="bottom_left")
