@@ -8,6 +8,8 @@ from bokeh.models import ColumnDataSource, ImageURL, HoverTool
 url = "https://raw.githubusercontent.com/nepito/calculator-trs/develop/tests/data/logo_nies.png"
 
 league = "263"
+
+
 def assing_color_premier(x):
     if x < 6:
         return "blue"
@@ -22,6 +24,7 @@ def assing_color_mx(x):
     if x > 12:
         return "red"
     return "orange"
+
 
 assing_color = {"262": assing_color_mx, "39": assing_color_premier, "263": assing_color_mx}
 bdp_and_ppda = pd.read_csv(f"/workdir/data/pression_index_{league}_2022.csv")
