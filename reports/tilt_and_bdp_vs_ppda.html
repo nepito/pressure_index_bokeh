@@ -57,10 +57,25 @@ equipo con menos inclinación es el equipo {{summary["min_tilt"]}}, con apenas u
                 {% endfor %}
             </table>
         </div>
+        <p>
+            En la gráfica de abajo, puedemos ver la inclinación del {{leader_team}} en cada uno de
+            sus partidos durante el último año. Cada punto corresponde a la inclinación que tuvo el
+            equipo en un partido específico. La gráfica está dividida en tres regiones, según el
+            porcentaje de inclinación esperada del torneo. La región entre las líneas roja y verde
+            representa la inclinación promedio de la {{league}} durante el último año. Los puntos
+            por encima de la línea verde indican que el {{leader_team}} tuvo una inclinación mayor
+            que la media, mientras que los puntos por debajo de la línea roja indican una
+            inclinación menor.
+        </p>
         <div class="container">
             <figure class="figure">
             {{ script_t|safe }} {{ div_t|safe }}
-        <figcaption class="figure-caption text-end"><strong>Figura 1.</strong> Ingreso mensual en México en función de los años de estudio.</figcaption>
+        <figcaption class="figure-caption text-end"><strong>Figura 1.</strong> Inclinación del
+        {{leader_team}} en el último año, incluyendo la temporada presente. La región que está entre la
+        líneas roja y verde representa la inclinación esperada del torneo. Los puntos en la región
+        superior a la línea verde representan partidos con una inclinación mayor a la esperada. Los
+        puntos en la región debajo de la línea roja representan partidos con una inclinación menor a
+        la esperada.</figcaption>
         </figure>
             </div>
         <div class="container">

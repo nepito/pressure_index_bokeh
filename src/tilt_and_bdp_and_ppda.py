@@ -177,5 +177,6 @@ rendered = env.get_template("tilt_and_bdp_vs_ppda.html").render(
     items=items,
     summary=summary_tilt_bdp_ppda,
     league=name_league[league],
+    leader_team = leader_team,
 )
 print(rendered)
