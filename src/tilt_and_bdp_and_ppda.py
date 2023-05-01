@@ -4,10 +4,16 @@ import numpy as np
 from bokeh.embed import components
 from bokeh.plotting import figure
 from bokeh.models import ColumnDataSource, ImageURL, HoverTool
+import json
+
+# JSON file
+league = "135"
+summary_path = f"/workdir/results/summary_tilt_bdp_ppda_{league}.json"
+f = open(summary_path, "r")
+# Reading from file
+summary_tilt_bdp_ppda = json.loads(f.read())
 
 url = "https://raw.githubusercontent.com/nepito/calculator-trs/develop/tests/data/logo_nies.png"
-
-league = "135"
 
 
 def assing_color_serie_a(x):
@@ -41,7 +47,9 @@ assing_color = {
     "135": assing_color_serie_a,
 }
 
-bdp_and_ppda = pd.read_csv(f"/workdir/data/pression_index_{league}_2022.csv").sort_values(by=['tilt'], ascending=False)
+bdp_and_ppda = pd.read_csv(f"/workdir/data/pression_index_{league}_2022.csv").sort_values(
+    by=["tilt"], ascending=False
+)
 bdp_and_ppda["color"] = bdp_and_ppda["league"].map(assing_color[league])
 source = ColumnDataSource(data=bdp_and_ppda)
 
@@ -91,5 +99,7 @@ rendered = env.get_template("tilt_and_bdp_vs_ppda.html").render(
     script=script,
     div=div,
     items=items,
+    summary=summary_tilt_bdp_ppda,
+    league=name_league[league],
 )
 print(rendered)
