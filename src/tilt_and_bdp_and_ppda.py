@@ -88,7 +88,12 @@ intercept = par[0][1]
 y_predicted = [slope * i + intercept for i in x]
 
 r1 = p.circle(
-    x="build_up_disruption", y="ppda", size=8, source=source, color="color", legend="futuro",
+    x="build_up_disruption",
+    y="ppda",
+    size=8,
+    source=source,
+    color="color",
+    legend="futuro",
 )
 width = 1
 height = 1.0
