@@ -8,6 +8,8 @@ from bokeh.models import ColumnDataSource, ImageURL, HoverTool
 url = "https://raw.githubusercontent.com/nepito/calculator-trs/develop/tests/data/logo_nies.png"
 
 league = "135"
+
+
 def assing_color_serie_a(x):
     if x < 7:
         return "blue"
@@ -31,12 +33,13 @@ def assing_color_mx(x):
         return "red"
     return "orange"
 
+
 assing_color = {
     "262": assing_color_mx,
     "39": assing_color_premier,
     "263": assing_color_mx,
-    "135": assing_color_serie_a
-    }
+    "135": assing_color_serie_a,
+}
 
 bdp_and_ppda = pd.read_csv(f"/workdir/data/pression_index_{league}_2022.csv")
 bdp_and_ppda["color"] = bdp_and_ppda["league"].map(assing_color[league])
@@ -52,7 +55,7 @@ name_league = {
     "263": "Liga de Expansión MX",
     "39": "Premier League",
     "135": "Serie A",
-    }
+}
 p = figure(
     title=f"PPDA vs BDP \n{name_league[league]} en el año 2022-2023",
     toolbar_location=None,
@@ -87,6 +90,6 @@ env = Environment(loader=fileLoader)
 rendered = env.get_template("tilt_and_bdp_vs_ppda.html").render(
     script=script,
     div=div,
-    items = items,
+    items=items,
 )
 print(rendered)
