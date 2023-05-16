@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+	<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+    * {
+      box-sizing: border-box;
+    }
+    
+    /* Create two equal columns that floats next to each other */
+    .column {
+      float: left;
+      width: 50%;
+      margin: auto;
+      padding: 10px;
+      height: 50vw;
+    }
+    
+    /* Clear floats after the columns */
+    .row:after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+    
+    /* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+    @media screen and (max-width: 600px) {
+      .column {
+        width: 100%;
+      padding: 5px;
+      height: 100vw;
+      }
+    .row:after {
+      content: "";
+      display: table;
+      clear: both;
+      padding: 10px;
+    }
+    }
+    </style>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.0/chart.js"></script>
+        <script src="https://cdn.bokeh.org/bokeh/release/bokeh-2.4.2.min.js"></script>
+        <script src="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.4.2.min.js"></script>
+<script src="https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.4.2.min.js"></script>
+        <script src="https://cdn.bokeh.org/bokeh/release/bokeh-gl-2.4.2.min.js"></script>
+        <script src="https://cdn.bokeh.org/bokeh/release/bokeh-mathjax-2.4.2.min.js"></script>
+	</head>
+	<body>
+		<div class="container-lg">
+			<p>
+        El objetivo de <a href="https://www.nies.futbol/">nies.futbol</a> es analizar el rendimiento
+        de los equipos y los jugadores de una manera precisa. Es por eso que hoy hablaremos de el
+        Expected Goal (xG) y los Expected Points (xP), dos métricas revolucionarias en el análisis
+        futbolístico.
+			</p>
+			<p>
+        Con el xG estimamos la probabilidad de que un disparo termine en gol. Para  calcular el xG
+        considerando factores como la ubicación, el ángulo y la distancia. Por otro lado, el xP
+        evalúa cuántos puntos debería haber obtenido un equipo en función de su rendimiento real.
+        Estas métricas nos permiten adentrarnos en la ciencia del fútbol y evaluar el rendimiento de
+        manera más objetiva.
+			</p>
+			<p>
+        El Expected Goal (xG) es una herramienta clave para analizar la calidad de las oportunidades
+        de gol generadas por un equipo o un jugador. Cada disparo recibe un valor numérico entre 0 y
+        1. Cuando el xG es 0 representa una probabilidad muy baja de gol y si el xG es 1 existe una
+        probabilidad muy alta de gol. El xG nos brinda una visión más profunda sobre la calidad de
+        las oportunidades de gol y permite una evaluación más precisa del rendimiento ofensivo de un
+        equipo o jugador.
+			</p>
+			<p>
+      Por su parte, los Expected Points (xP) aprovechan el poder del xG para estimar los puntos que
+      un equipo debería haber obtenido en función de su rendimiento en el juego. Al tener en cuenta
+      la calidad de las oportunidades creadas y concedidas, el xP ofrece una perspectiva más
+      objetiva sobre el desempeño real de un equipo. Si bien los resultados pueden ser influenciados
+      por la suerte y otros factores imprevistos, el xP nos permite evaluar si un equipo está
+      alcanzando o superando las expectativas generadas por su rendimiento en el campo.
+			</p>
+      <p>
+        En la figura de bajo podemos ver los puntos obtenidos y los esperados de los equipos de la
+        Ligue 1. Vemos que el PSG tiene muchos más puntos de los esperados. Vemos que Lille es el
+        equipo que "debería" de estar lidereando el torneo. En la parte baja, notamos que el Ajaccio
+        y Nantes no merecen estar en la zona de descenso.
+      </p>
+		</div>
+    <div class="row">
+      <div class="column">
+	<canvas id="myChart3" width="49" height="49"></canvas>	
+		</div>
+      <div class="column">
+	<canvas id="myChart4" width="49" height="49"></canvas>	
+		</div>
+		</div>
+			<p>
+      El Expected Goal (xG) y los Expected Points (xP) son herramientas precisas con las que
+      evaluamos el rendimiento de los equipos y los jugadores. Estas métricas nos permiten
+      adentrarnos en el análisis de las oportunidades de gol y los puntos esperados. Al comprender
+      la calidad de las oportunidades generadas y el rendimiento real de un equipo, podemos obtener
+      una imagen más completa y objetiva del juego. Transformamos el fútbol en un rompecabezas más
+      claro y emocionante cuando utilizamos el poder del xG y el xP para descifrar sus secretos.
+			</p>
+  
+	</body>
+	<script>
+  const logo_nies = new Image(75, 50);
+  logo_nies.src = "https://raw.githubusercontent.com/nepito/calculator-trs/develop/tests/data/logo_nies.png";
+  const logo_league = new Image(50, 50);
+  logo_league.src = "{{league["logo_url"]}}";
+  {% for item in items %}
+    const point_{{item.team_id}} = new Image(25, 25);
+    point_{{item.team_id}}.src = "https://media.api-sports.io/football/teams/{{item.team_id}}.png";
+  {% endfor %}
+		var ctx = document.getElementById("myChart3").getContext("2d")
+		var ctx4 = document.getElementById("myChart4").getContext("2d")
+		const data = {
+  datasets: [
+    {
+    label: 'xTable',
+    data: [
+  {% for item in items %}
+      {
+        x: {{item.x}},
+        y: {{item.xpuntos}}
+      },
+  {% endfor %}
+  {x: {{league["min_x"]-0.5}}, y:{{league["min_xP"]+2}}}
+  ]
+  }]
+};
+		const data4 = {
+  datasets: [
+  {
+    label: 'Table',
+    data: [
+  {% for item in items %}
+      {
+        x: {{item.x}},
+        y: {{item.puntos}}
+      },
+  {% endfor %}
+  {x: {{league["min_x"]-0.5}}, y:15}
+    ],
+    pointHoverBackgroundColor: '#fff',
+    pointHoverBorderColor: 'rgb(255, 255, 0)'
+  }]
+};
+		var myChart = new Chart(ctx,
+		{
+  type: 'scatter',
+  legend: {display: false},
+  data: data4,
+  options: {
+    
+  plugins: {legend: {display: false}, title: {
+        display: true,
+        text: 'Tabla: Puntos obtenidos'
+      },
+      tooltip: {
+        enabled: false // <-- this option disables tooltips
+      },
+        hover: {mode: null}
+    },
+    scales:{
+    x: {display: false, min: {{league["min_x"]-0.8}}, max:3.5},
+    y: {
+      title: {
+        display: true,
+        text: 'Puntos obtenidos'
+      }
+    }},
+    elements: {
+      point: {
+        pointStyle:[
+  {% for item in items %}
+  point_{{item.team_id}},
+  {% endfor %}
+          logo_nies
+      ]
+      },
+      line: {
+        borderWidth: 3
+      }
+    }
+  },
+}
+		)
+
+		var myChart = new Chart(ctx4,
+		{
+  type: 'scatter',
+  data: data,
+  options: {
+  plugins: {legend: {display: false}, title: {
+        display: true,
+        text: 'xTabla: Puntos esperados (xP)'
+      },
+      tooltip: {
+        enabled: false // <-- this option disables tooltips
+      },
+        hover: {mode: null}
+    },
+    scales:{
+    x: {display: false, min: {{league["min_x"]-0.8}}, max:3.5},
+    y: {
+      title: {
+        display: true,
+        text: 'Puntos esperados (xP)'
+      }
+    }},
+    elements: {
+      point: {
+        pointStyle:[
+  {% for item in items %}
+  point_{{item.team_id}},
+  {% endfor %}
+          logo_league
+        ]
+      },
+      line: {
+        borderWidth: 3
+      }
+    }
+  },
+}
+		)
+		
+	</script>
+</html>
