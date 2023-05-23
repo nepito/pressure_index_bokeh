@@ -48,39 +48,37 @@
 	<body>
 		<div class="container-lg">
 			<p>
-        El objetivo de <a href="https://www.nies.futbol/">nies.futbol</a> es analizar el rendimiento
-        de los equipos y los jugadores de una manera precisa. Es por eso que hoy hablaremos de el
-        Expected Goal (xG) y los Expected Points (xP), dos métricas revolucionarias en el análisis
-        futbolístico.
-			</p>
+        <p>
+          Como vimos en <a href="https://www.nies.futbol/2023/05/justa-tabla-justa.html">¡Justa
+          tabla, justa!</a> el Expected Goal (xG) y los Expected Points (xP) son herramientas
+          precisas con las que evaluamos el rendimiento de los equipos y los jugadores. Estas
+          métricas nos permiten adentrarnos en el análisis de las oportunidades de gol y los puntos
+          esperados.
+          </p>
+        <p>
+          En aquella nota les presentamos la "Tabla de la Justicia" para la {{league["name"]}} de
+          {{league["country"]}}. Hoy vemos esos cálculos para la liga holandesa. Obvio, escribimos esta nota
+          aprovechando que Santiago Gimenez quedó campeón.
+          </p>
 			<p>
-        Con el xG estimamos la probabilidad de que un disparo termine en gol. Para  calcular el xG
-        considerando factores como la ubicación, el ángulo y la distancia. Por otro lado, el xP
-        evalúa cuántos puntos debería haber obtenido un equipo en función de su rendimiento real.
-        Estas métricas nos permiten adentrarnos en la ciencia del fútbol y evaluar el rendimiento de
-        manera más objetiva.
-			</p>
+        Como ya vimos, el xG estima la probabilidad de que un disparo termine en gol. Para calcular
+        el xG considerando factores como la ubicación, el ángulo y la distancia. Para calcularlo,
+        consideramos todos los disparos a portería del torneo pasado. Esto lo hacemos para cada una
+        de las ligas, así que tenemos un xG para cada liga. Al final, tenemos un promedio de la
+        probabilidad de que un tiro sea gol.
+          </p>
 			<p>
-        El Expected Goal (xG) es una herramienta clave para analizar la calidad de las oportunidades
-        de gol generadas por un equipo o un jugador. Cada disparo recibe un valor numérico entre 0 y
-        1. Cuando el xG es 0 representa una probabilidad muy baja de gol y si el xG es 1 existe una
-        probabilidad muy alta de gol. El xG nos brinda una visión más profunda sobre la calidad de
-        las oportunidades de gol y permite una evaluación más precisa del rendimiento ofensivo de un
-        equipo o jugador.
-			</p>
-			<p>
-      Por su parte, los Expected Points (xP) aprovechan el poder del xG para estimar los puntos que
-      un equipo debería haber obtenido en función de su rendimiento en el juego. Al tener en cuenta
-      la calidad de las oportunidades creadas y concedidas, el xP ofrece una perspectiva más
-      objetiva sobre el desempeño real de un equipo. Si bien los resultados pueden ser influenciados
-      por la suerte y otros factores imprevistos, el xP nos permite evaluar si un equipo está
-      alcanzando o superando las expectativas generadas por su rendimiento en el campo.
+        Algunos jugadores meten más goles que el promedio. Supongamos que es porque es un goleador
+        de mucha calidad. El equipo de este jugador tendría un desempeño mejor del esperado. Esta
+        podría ser una situación. Saber por qué un equipo tiene un desempeño distinto al esperado,
+        dependerá de cada caso en particular.
 			</p>
       <p>
         En la figura de bajo podemos ver los puntos obtenidos y los esperados de los equipos de la
-        Ligue 1. Vemos que el PSG tiene muchos más puntos de los esperados. Vemos que Lille es el
-        equipo que "debería" de estar lidereando el torneo. En la parte baja, notamos que el Ajaccio
-        y Nantes no merecen estar en la zona de descenso.
+        Eredivisie. Vemos que el Feyenoord tuvo en mejor desempaño: esperado y obtenido. La tabla
+        fue justa. El equipo AZ Alkmaar va en la tercera posición, pero su desempeño sugiere que
+        es el sexto mejor equipo. En la parte baja, notamos que el Excelsior se salvo de la zona de
+        descenso, aunque según la "Tabla de la justicia" debería de descender.
       </p>
 		</div>
     <div class="row">
@@ -92,12 +90,9 @@
 		</div>
 		</div>
 			<p>
-      El Expected Goal (xG) y los Expected Points (xP) son herramientas precisas con las que
-      evaluamos el rendimiento de los equipos y los jugadores. Estas métricas nos permiten
-      adentrarnos en el análisis de las oportunidades de gol y los puntos esperados. Al comprender
-      la calidad de las oportunidades generadas y el rendimiento real de un equipo, podemos obtener
-      una imagen más completa y objetiva del juego. Transformamos el fútbol en un rompecabezas más
-      claro y emocionante cuando utilizamos el poder del xG y el xP para descifrar sus secretos.
+      En las siguientes notas, nos adentraremos más en la interpretración de la tabla de la
+      justicias. ¿Cómo les suena xTable 😹? Hasta la siguiente solo nos queda mandar una fuerte
+      felicitación a Santiago Gimenez y a todo el Feyenoord. Bonita semana.
 			</p>
   
 	</body>
@@ -205,7 +200,8 @@
       title: {
         display: true,
         text: 'Puntos esperados (xP)'
-      }
+      },
+      min: {{league["min_xP"]-2}}
     }},
     elements: {
       point: {
