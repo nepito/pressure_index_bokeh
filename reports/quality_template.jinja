@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>nies</title>
+        <link rel="icon" href = "https://raw.githubusercontent.com/nepito/bukeh_example/feature/template/data/nies.png" type="image/icon type">
+        <script src="https://cdn.bokeh.org/bokeh/release/bokeh-2.4.2.min.js"></script>
+        <script src="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.4.2.min.js"></script>
+        <script src="https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.4.2.min.js"></script>
+        <script src="https://cdn.bokeh.org/bokeh/release/bokeh-gl-2.4.2.min.js"></script>
+        <script src="https://cdn.bokeh.org/bokeh/release/bokeh-mathjax-2.4.2.min.js"></script>
+        <script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            <p>
+                En este artículo, hablaremos de la inclinación de los equipos de la {{league}}
+                veremos el desempeño del {{leader_team}} en este rubro. Para
+                ello, presentaremos una tabla con los equipos de la {{league}}, su posición en la
+                tabla y su inclinación promedio durante el último año. También incluiremos una
+                gráfica para mostrar la inclinación del {{leader_team}} en cada uno de sus partidos.
+                También veremos el valor de los índices de presión para la {{league}}. Mostrando la
+                gráfica de disersión que relaciona el <strong>PPDA</strong> con la
+                <strong>BDP</strong>.
+            </p>
+            <p class="lead">
+                Como platicamos en <a href =
+                "https://niesoccer.blogspot.com/2023/03/inclinando-la-balanza.html"
+                target="_blank">Inclinando la Balanza</a>: la inclinación nos habla de la posesión
+                del balón que un equipo tiene en una zona en la que puede hacer daño, el último
+                tercio de la cancha. La definición de la inclinación es el porcentaje de los pases
+                totales en el último tercio de la cancha que hizo un equipo. Por ejemplo, supongamos
+                que en un partido hubo en total 10 pases en el último tercio de la cancha. Digamos
+                que el equipo local hizo 7 pases y el equipo visitante hizo 3. Entonces la
+                inclinación del equipo local sería del 70% y del equipo visitante del 30%. Pues
+                bien, como les había prometido, hoy hablaremos de la inclinación de los equipos de
+                la {{league}}.
+            </p>
+            <p>
+
+La tabla muestra a los equipo la {{league}} ordenados por su inclinación promedio. Vemos que en la
+{{league}} es el equipo {{summary["max_tilt"]}} quien tiene la inclinación más alta, con un
+promedio del {{summary["max_tilt_value"]}}%, seguido por el Toluca, con un promedio del 55%. El
+equipo con menos inclinación es el equipo {{summary["min_tilt"]}}, con apenas un
+{{summary["min_tilt_value"]}}%.
+            </p>
+            <table style="border:1px solid black;margin-left:auto;margin-right:auto;" class="sortable">
+                <tr>
+                    <th>Posición</th>
+                    <th></th>
+                    <th>Equipo</th>
+                    <th>Calidad del momento</th>
+                    <th>PPDA</th>
+                    <th>GGPI</th>
+                    <th>Presión alta</th>
+                </tr>
+                {% for item in items %}
+                <TR class="item">
+                   <TD align="center">{{item.idx}}</TD>
+                   <TD align="right"><img src="https://media.api-sports.io/football/teams/{{item.id }}.png" width="20"></TD>
+                   <TD class="c1">{{item.name}}</TD>
+                   <td align ="center">{{item.quality}}</td>
+                   <td align ="center">{{item.ppda}}</td>
+                   <td align ="center">{{item.ggpi}}</td>
+                   <td align ="center">{{item.high_pression}}</td>
+                </TR>
+                {% endfor %}
+            </table>
+        </div>
+        <p>
+            En la gráfica de abajo, puedemos ver la inclinación del {{leader_team}} en cada uno de
+            sus partidos durante el último año. Cada punto corresponde a la inclinación que tuvo el
+            equipo en un partido específico. La gráfica está dividida en tres regiones, según el
+            porcentaje de inclinación esperada del torneo. La región entre las líneas roja y verde
+            representa la inclinación promedio de la {{league}} durante el último año. Los puntos
+            por encima de la línea verde indican que el {{leader_team}} tuvo una inclinación mayor
+            que la media, mientras que los puntos por debajo de la línea roja indican una
+            inclinación menor.
+        </p>
+        <p>
+            Al pasar el cursor sobre cada punto, podemos ver el resultado del partido
+            correspondiente. Por ejemplo, notamos que el {{leader_team}} tuvo su inclinación menor
+            en su partido contra el Liverpool, que ganó 4-1. La inclinación del {{leader_team}} fue
+            de 27%. También podemos ver que el último partido con inclinación mayor al promedio de
+            la liga fue contra la Juventus, jugando de visita. En ese encuentro el {{leader_team}}
+            logró una inclinación de 67.2% y ganó el partido 0 a 1.
+        </p>
+        <div class="container">
+            <p class="lead">
+            Ahora veamos cómo es el valor de los índices de presión para la {{league}}.
+            Como vimos en los <a
+            href="https://niesoccer.blogspot.com/2023/04/indices-de-presion-ppda-y-build-up.html">Índices
+            de presión: PPDA y Build-Up Disruption 
+            </a> el <strong>PPDA</strong> mide la cantidad de pases que permite el equipo defensor
+            antes de que lleve a cabo una acción defensiva. También vimos que la
+            <strong>BDP</strong> mide el efecto destructivo de la presión en la tasa de
+            pases completos del equipo rival.
+            </p>
+            <p>En la figura de abajo presentamos la relación que existe entre los dos índices. En el
+            eje horizontal tenemos la <strong>BDP</strong> y en el eje <em>y</em> el
+            <strong>PPDA</strong>. Los puntos representan el desempeño de cada uno de los equipos de
+            la {{league}}.</p>
+        </div>
+        <div class="container">
+        <figure class="figure">
+		{{ script|safe }} {{ div|safe }}
+    <figcaption class="figure-caption text-end"><strong>Figura 2.</strong> Pases permitidos por
+    acción defensiva (PPDA) contra interrupción en la fase de construcción (BDP). Los puntos de color azul
+    son aquellos que están en posiciones europeas. Los puntos en rojo son los equipos que están en
+    la zona de descenso. El resto de los equipos están en color naranja. La línea negra corresponde a
+    la línea de tendecia de las dos variables.</figcaption>
+    </figure>
+	    </div>
+        <div>
+            <p>Podemos ver que el equipo con mejor <strong>BDP</strong>, el punto hasta la derecha,
+        es el equipo {{summary["max_bdp"]}}. El punto más a la izquierda corresponde el equipo {{summary["min_bdp"]}} y es este equipo el que tiene más
+        margen de mejora en la <strong>BDP</strong>. Que el valor sea negativo nos indica que los
+        equipos mejoran la precisión en los pases cuando juegan contra el {{summary["min_bdp"]}}.
+    </p>
+    <p>{{summary["min_ppda"]}} es el equipo que permite menos pases a sus rivales, es decir tiene el menor <strong>PPDA</strong> de
+    la liga. {{summary["max_ppda"]}} es el equipo que permite más pases antes de poder recuperar el balón. Es
+    este equipo el que está en la parte superio de la figura.</p>
+<p>Los puntos en rojo representan los equipos que están en la zona de descenso. Los equipos en la
+zona de competiciones europeas corresponden a los puntos de color azul. El resto de los equipos
+están en color naranja.
+</p>
+<p>
+    La línea negra muestra la relación entre los índices. La pendiente negativa nos indica que a
+    mayor <strong>BDP</strong> menor es el número de pases que los equipos le permiten a sus
+rivales. Esta relación es la esperada. Cuando un equipo presiona a su rival, recupera antes el balón
+    porque su rival disminuye la precisión de sus pases. Los equipo que están por debajo de la línea
+    negra permiten menos pases que los esperados para ese nivel de poder destructivos (BDP). Por
+    ejemplo, cinco de los equipos en zonas europeas cumplena esta condición. El equipo Lazio es el
+    único de ese grupo que no la cumple con esa condición.
+</p>
+<p>
+Con esto acabamos la descripción de la {{league}} y el líder {{leader_team}}. Esperamos pronto
+regresar a México 😉.
+</p></div>
+    </body>
+</html>
